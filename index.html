@@ -144,7 +144,7 @@ F-statistic: 5.053 on 1 and 141 DF,  p-value: 0.02614</code></pre>
 <p>Fit linear regression weighted by number of homicides. Exclude countries with gross domestic product (at purchasing power parity) per capita lower than the median because we are primarily interested in developed countries.</p>
 <pre><code>
 Call:
-lm(formula = s$homicides_per_100000 ~ s$firearms_per_100, weights = as.numeric(s$population) * 
+lm(formula = s$homicides_per_100000 ~ s$firearms_per_100, weights = s$population * 
     s$homicides_per_100000)
 
 Weighted Residuals:

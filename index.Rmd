@@ -213,10 +213,10 @@ Fit linear regression weighted by number of homicides. Exclude countries with gr
 
 ```{r a3m1, echo=FALSE, message=FALSE, warning=FALSE, comment=NA, highlight=TRUE}
 s <- d[d$gdp_ppp_per_capita > median(d$gdp_ppp_per_capita),]
-summary(lm(s$homicides_per_100000~s$firearms_per_100, weights=as.numeric(s$population)*s$homicides_per_100000))
+summary(lm(s$homicides_per_100000~s$firearms_per_100, weights=s$population*s$homicides_per_100000))
 ```
 
-Firearms are statistically significant and have negative coefficient in the regression, therefore **more firearms means less homicide**.
+Firearms are statistically significant and have negative coefficient in the regression, therefore in developed countries **more firearms means less homicide**.
 
 Data Sources
 ------------
