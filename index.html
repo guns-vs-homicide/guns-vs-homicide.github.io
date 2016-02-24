@@ -91,7 +91,8 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 54680 on 141 degrees of freedom
 Multiple R-squared:  0.000139,  Adjusted R-squared:  -0.006952 
 F-statistic: 0.01961 on 1 and 141 DF,  p-value: 0.8888</code></pre>
-<p>Firearms are not statistically significant. Gross domestic product (at purchasing power parity) per capita can be a strong confounding variable, so fit another regression.</p>
+<p>Firearms are not statistically significant.</p>
+<p>Gross domestic product (at purchasing power parity) per capita can be a strong confounding variable, so fit another regression.</p>
 <pre><code>
 Call:
 lm(formula = d$homicides_per_100000 ~ d$firearms_per_100 + d$gdp_ppp_per_capita, 
@@ -317,6 +318,10 @@ F-statistic: 15.81 on 1 and 69 DF,  p-value: 0.0001701</code></pre>
 141                Venezuela                 53.6   29854238   537961457365             10.7
 142                    Yemen                  6.8   24882792    91416226977             54.8
 143                 Zimbabwe                  7.5   14565482    24446028322              4.4</code></pre>
+</div>
+<div id="source-code" class="section level2">
+<h2>Source Code</h2>
+<p><a href="https://github.com/guns-vs-homicide/guns-vs-homicide.github.io" class="uri">https://github.com/guns-vs-homicide/guns-vs-homicide.github.io</a></p>
 </div>
 
 

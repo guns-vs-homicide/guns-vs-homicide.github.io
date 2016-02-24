@@ -185,7 +185,9 @@ Fit linear regression weighted by population.
 summary(lm(d$homicides_per_100000~d$firearms_per_100, weights=d$population))
 ```
 
-Firearms are not statistically significant. Gross domestic product (at purchasing power parity) per capita can be a strong confounding variable, so fit another regression.
+Firearms are not statistically significant.
+
+Gross domestic product (at purchasing power parity) per capita can be a strong confounding variable, so fit another regression.
 
 ```{r a1m2, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 summary(lm(d$homicides_per_100000~d$firearms_per_100+d$gdp_ppp_per_capita, weights=d$population))
@@ -245,3 +247,8 @@ d$label <- NULL
 d$gdp_ppp_per_capita <- NULL
 d
 ```
+
+Source Code
+-----------
+
+https://github.com/guns-vs-homicide/guns-vs-homicide.github.io
