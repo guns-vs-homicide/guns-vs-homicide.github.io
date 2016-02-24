@@ -1,6 +1,8 @@
 ---
 title: "Firearms vs. Intentional Homicide"
-output: html_document
+output: 
+  html_document: 
+    self_contained: no
 ---
 
 The data clearly supports your opinion
