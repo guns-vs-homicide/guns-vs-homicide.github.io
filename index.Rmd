@@ -162,11 +162,10 @@ d$label[d$population < 100000000] <- ""
 d$gdp_ppp_per_capita <- d$gdp_ppp/d$population
 ```
 
-```{r scatterplot,  echo=FALSE, message=FALSE, warning=FALSE, fig.width=6, fig.height=5, dpi=300}
+```{r scatterplot,  echo=FALSE, message=FALSE, warning=FALSE, fig.width=6, fig.height=5, dpi=150}
 par(mar=c(4,4,1,1))
 symbols(d$firearms_per_100, d$homicides_per_100000, 
      circles=sqrt(d$population), 
-     #main="Firearms vs. Intentional Homicide", 
   	 xlab="Firearms per 100 people", 
      ylab="Homicides per 100,000 people per year",
      log='xy', fg="white", bg="red", inches=0.3, 
@@ -193,30 +192,58 @@ Gross domestic product (at purchasing power parity) per capita can be a strong c
 summary(lm(d$homicides_per_100000~d$firearms_per_100+d$gdp_ppp_per_capita, weights=d$population))
 ```
 
-Even after controlling for GDP (PPP) per capita, firearms are still not statistically significant, therefore **the effect of firearms on homicide, if it exists, must be small**.
+Even after controlling for GDP (PPP) per capita, firearms are still not statistically significant.
+
+###Conclusion: the effect of firearms on homicide, if it exists, must be small.
 
 Argument 2
 ----------
 
-Number of firearms and homicide rate are not normally distributed. Transform them by taking the log, then fit linear regression weighted by population:
+Number of firearms and homicide rate are not normally distributed, as evidenced by the following Q-Q plots: 
+
+```{r qq_plot_raw,  echo=FALSE, message=FALSE, warning=FALSE, fig.width=6, fig.height=5, dpi=150}
+par(mfrow=c(1,2))
+qqnorm(d$firearms_per_100, font.main = 1, main="Firearms per 100")
+qqline(d$firearms_per_100)
+qqnorm(d$homicides_per_100000, font.main = 1, main="Homicides per 100,000")
+qqline(d$homicides_per_100000)
+```
+
+Transform both variables by taking the log. After that, Q-Q plots look better:
+
+```{r qq_plot_transformed,  echo=FALSE, message=FALSE, warning=FALSE, fig.width=6, fig.height=5, dpi=150}
+par(mfrow=c(1,2))
+qqnorm(log(d$firearms_per_100), font.main = 1, main="Firearms per 100\nafter log transform")
+qqline(log(d$firearms_per_100))
+qqnorm(log(d$homicides_per_100000), font.main = 1, main="Homicides per 100,000\nafter log transform")
+qqline(log(d$homicides_per_100000))
+```
+
+Fit linear regression weighted by population to the transformed variables:
 
 ```{r a2m1, echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 summary(lm(log(d$homicides_per_100000)~log(d$firearms_per_100), weights=d$population))
 ```
 
-Firearms are statistically significant and have positive coefficient in the regression, therefore **more firearms means more homicide**.
+Firearms are statistically significant and have positive coefficient in the regression.
+
+###Conclusion: more firearms means more homicide.
 
 Argument 3
 ----------
 
-Fit linear regression weighted by number of homicides. Exclude countries with gross domestic product (at purchasing power parity) per capita lower than the median because we are primarily interested in developed countries. 
+Fit linear regression weighted by number of homicides. Homicides are rare, therefore variance of homicide rate estimates is primarily driven by number of homicides rather than by population. There is no cirular reasoning here - we're predicting *homicide rate* rather than absolute number of homicides.
+
+Exclude countries with gross domestic product (at purchasing power parity) per capita lower than the median because we are primarily interested in developed countries. 
 
 ```{r a3m1, echo=FALSE, message=FALSE, warning=FALSE, comment=NA, highlight=TRUE}
 s <- d[d$gdp_ppp_per_capita > median(d$gdp_ppp_per_capita),]
 summary(lm(s$homicides_per_100000~s$firearms_per_100, weights=s$population*s$homicides_per_100000))
 ```
 
-Firearms are statistically significant and have negative coefficient in the regression, therefore in developed countries **more firearms means less homicide**.
+Firearms are statistically significant and have negative coefficient in the regression.
+
+###Conclusion: in developed countries, more firearms means less homicide.
 
 Data Sources
 ------------

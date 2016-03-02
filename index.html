@@ -68,7 +68,7 @@ img {
 
 <div id="the-data-clearly-supports-your-opinion" class="section level2">
 <h2>The data clearly supports your opinion</h2>
-<p><img src="index_files/figure-html/scatterplot-1.png" title="" alt="" width="1800" /></p>
+<p><img src="index_files/figure-html/scatterplot-1.png" title="" alt="" width="900" /></p>
 </div>
 <div id="argument-1" class="section level2">
 <h2>Argument 1</h2>
@@ -113,11 +113,18 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 54330 on 140 degrees of freedom
 Multiple R-squared:  0.01973,   Adjusted R-squared:  0.005731 
 F-statistic: 1.409 on 2 and 140 DF,  p-value: 0.2478</code></pre>
-<p>Even after controlling for GDP (PPP) per capita, firearms are still not statistically significant, therefore <strong>the effect of firearms on homicide, if it exists, must be small</strong>.</p>
+<p>Even after controlling for GDP (PPP) per capita, firearms are still not statistically significant.</p>
+<div id="conclusion-the-effect-of-firearms-on-homicide-if-it-exists-must-be-small." class="section level3">
+<h3>Conclusion: the effect of firearms on homicide, if it exists, must be small.</h3>
+</div>
 </div>
 <div id="argument-2" class="section level2">
 <h2>Argument 2</h2>
-<p>Number of firearms and homicide rate are not normally distributed. Transform them by taking the log, then fit linear regression weighted by population:</p>
+<p>Number of firearms and homicide rate are not normally distributed, as evidenced by the following Q-Q plots:</p>
+<p><img src="index_files/figure-html/qq_plot_raw-1.png" title="" alt="" width="900" /></p>
+<p>Transform both variables by taking the log. After that, Q-Q plots look better:</p>
+<p><img src="index_files/figure-html/qq_plot_transformed-1.png" title="" alt="" width="900" /></p>
+<p>Fit linear regression weighted by population to the transformed variables:</p>
 <pre><code>
 Call:
 lm(formula = log(d$homicides_per_100000) ~ log(d$firearms_per_100), 
@@ -137,11 +144,15 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 7805 on 141 degrees of freedom
 Multiple R-squared:  0.0346,    Adjusted R-squared:  0.02775 
 F-statistic: 5.053 on 1 and 141 DF,  p-value: 0.02614</code></pre>
-<p>Firearms are statistically significant and have positive coefficient in the regression, therefore <strong>more firearms means more homicide</strong>.</p>
+<p>Firearms are statistically significant and have positive coefficient in the regression.</p>
+<div id="conclusion-more-firearms-means-more-homicide." class="section level3">
+<h3>Conclusion: more firearms means more homicide.</h3>
+</div>
 </div>
 <div id="argument-3" class="section level2">
 <h2>Argument 3</h2>
-<p>Fit linear regression weighted by number of homicides. Exclude countries with gross domestic product (at purchasing power parity) per capita lower than the median because we are primarily interested in developed countries.</p>
+<p>Fit linear regression weighted by number of homicides. Homicides are rare, therefore variance of homicide rate estimates is primarily driven by number of homicides rather than by population. There is no cirular reasoning here - we’re predicting <em>homicide rate</em> rather than absolute number of homicides.</p>
+<p>Exclude countries with gross domestic product (at purchasing power parity) per capita lower than the median because we are primarily interested in developed countries.</p>
 <pre><code>
 Call:
 lm(formula = s$homicides_per_100000 ~ s$firearms_per_100, weights = s$population * 
@@ -161,7 +172,10 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 196800 on 69 degrees of freedom
 Multiple R-squared:  0.1864,    Adjusted R-squared:  0.1746 
 F-statistic: 15.81 on 1 and 69 DF,  p-value: 0.0001701</code></pre>
-<p>Firearms are statistically significant and have negative coefficient in the regression, therefore in developed countries <strong>more firearms means less homicide</strong>.</p>
+<p>Firearms are statistically significant and have negative coefficient in the regression.</p>
+<div id="conclusion-in-developed-countries-more-firearms-means-less-homicide." class="section level3">
+<h3>Conclusion: in developed countries, more firearms means less homicide.</h3>
+</div>
 </div>
 <div id="data-sources" class="section level2">
 <h2>Data Sources</h2>
